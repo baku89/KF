@@ -1,4 +1,5 @@
 
 node_modules
 *.pyc
+ftp.config.js
 c4dproject/backup/*

@@ -9,8 +9,6 @@ const ftp = require('vinyl-ftp')
 const runSequence = require('run-sequence')
 const browserSync = BrowserSync.create()
 
-// import ftpConfig from './ftp.config.js'
-
 let developmentMode = true
 
 process.env.NODE_ENV = 'dev'
@@ -90,17 +88,20 @@ gulp.task('release', () => {
 })
 
 //==================================================
-// gulp.task('deploy', () => {
-//
-// 	let conn = ftp.create(ftpConfig)
-//
-// 	let globs = ['./public/**']
-// 	let remotePath = '/ins-stud.io/public_html/studio'
-//
-// 	return gulp.src(globs, {base: './public', buffer: false})
-// 		.pipe( conn.newer(remotePath) )
-// 		.pipe( conn.dest(remotePath) )
-// })
+gulp.task('deploy', () => {
+
+	const ftpConfig = require('./ftp.config.js').default
+
+	console.log(ftpConfig)
+
+	let conn = ftp.create(ftpConfig)
+
+	let globs = ['./public/**']
+
+	return gulp.src(globs, {base: './public', buffer: false})
+		.pipe( conn.newer(ftpConfig.remotePath) )
+		.pipe( conn.dest(ftpConfig.remotePath) )
+})
 
 
 //==================================================
