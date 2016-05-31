@@ -1,0 +1,4 @@
+
+node_modules
+*.pyc
+c4dproject/backup/*
