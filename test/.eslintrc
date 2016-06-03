@@ -20,6 +20,8 @@
 	"globals": {
 		"jQuery": true,
 		"$": true,
-		"Vue": true
+		"Vue": true,
+    "createjs": true,
+    "THREE": true
 	}
 }

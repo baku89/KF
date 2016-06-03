@@ -1,37 +1,48 @@
 import c4d
 
-def getDividingRatio(value, minValue, maxValue):
+def interior(value, minValue, maxValue):
 	return (value - minValue) / (maxValue - minValue)
 
-class KeyframeExporter:
+def generateKeyframeData(curve):
 
-	"""A simple keyframe exporter for c4d"""
-	def __init__(self, curve):
+	data = []
+	num = curve.GetKeyCount()
 
-		self.keyframes = []
-		self.curve = curve
+	for i in xrange(num):
 
-		for i in xrange(curve.GetKeyCount()):
-			key = curve.GetKey(i)
-			time = float(key.GetTime().Get())
-			timeLeft = float(key.GetTimeLeft().Get())
-			timeRight = float(key.GetTimeRight().Get())
+		key = curve.GetKey(i)
+		interpolation = key.GetInterpolation()
 
-			self.keyframes.append({
-				"interpolation": key.GetInterpolation(),
-				"value": key.GetValue(),
-				"time":	time,
-				"value_left": key.GetValueLeft(),
-				"time_left": timeLeft,
-				"value_right": key.GetValueRight(),
-				"time_right": timeRight
-			})
+		time = key.GetTime().Get()
+		value = key.GetValue()
 
-	# def normalizeTime():
-	# 	timeMin = curve.GetKey(0).GetTime().Get()
-	# 	timeMax = curve.GetKey(keyNum - 1).GetTime().Get()
+		if i == num - 1 or interpolation == c4d.CINTERPOLATION_STEP:
 
-	# 	for key in self.keyframes:
-	# 		key["time"] = getDividingRatio(key["time"], timeMin, timeMax)
-	# 		key["time_left"] = getDividingRatio(key["time_left"], timeMin, timeMax)
-	# 		key["time_right"] = getDividingRatio(key["time_right"], timeMin, timeMax)
+			data.append([time, value])
+
+		elif interpolation == c4d.CINTERPOLATION_SPLINE:
+
+			nextKey = curve.GetKey(i + 1)
+
+			td = nextKey.GetTime().Get() - time
+			vd = nextKey.GetValue() - value
+
+			x1 = key.GetTimeRight().Get() / td
+			y1 = key.GetValueRight() / vd
+			x2 = nextKey.GetTimeLeft().Get() / td + 1.0
+			y2 = nextKey.GetValueLeft() / vd + 1.0
+
+			data.append([time, value, x1, y1, x2, y2])
+
+		elif interpolation == c4d.CINTERPOLATION_LINEAR:
+
+			data.append([time, value, 0, 0, 1, 1])
+
+	return data
+
+
+
+
+
+
+

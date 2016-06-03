@@ -1,0 +1,24 @@
+doctype html
+html
+	head
+		base(href='./')
+		meta(charset='utf-8')
+		
+		link(href='https://fonts.googleapis.com/css?family=Alegreya+Sans:400,700' rel='stylesheet' type='text/css')
+		link(rel='stylesheet' type='text/css' href='../style.css')
+
+		title Keyframes (WIP)
+
+	body
+		hgroup.header
+			h1 C4D to JS Keyframe Exchanging Test (WIP)
+			ul
+				li: a(href='./data/jumping_keyframes.json') Keyframe data (JSON)
+				li: a(href='https://github.com/baku89/KeyframeExchanging' target='_blank') GitHub (Fork me)
+				li
+					| Created by 
+					a(href='http://baku89.com' target='_blank') Baku Hashimoto
+	
+		canvas#canvas
+
+	script(src='../js/main_01.js')

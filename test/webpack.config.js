@@ -1,8 +1,9 @@
-let webpack = require('webpack');
+let webpack = require('webpack')
 
 module.exports = {
 	entry: {
-		index: './src/index.js'
+		'main_01': './src/main_01.js',
+		'main_02': './src/main_02.js'
 	},
 	output: {
 		filename: '[name].js',

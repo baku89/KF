@@ -42,7 +42,7 @@ gulp.task('webpack', () => {
 
 //==================================================
 gulp.task('jade', () => {
-	return gulp.src('./src/*.jade')
+	return gulp.src('./src/**/*.jade')
 		.pipe($.plumber())
 		.pipe($.data(() => {
 			return requireUncached('./src/jade/data.json')
@@ -78,7 +78,7 @@ gulp.task('browser-sync', () => {
 //==================================================
 gulp.task('watch', () => {
 	gulp.watch('./src/**/*.styl', ['stylus'])
-	gulp.watch(['./src/*.jade', './src/jade/*'], ['jade'])
+	gulp.watch(['./src/**/*.jade', './src/jade/*'], ['jade'])
 })
 
 //==================================================
@@ -92,10 +92,7 @@ gulp.task('deploy', () => {
 
 	const ftpConfig = require('./ftp.config.js').default
 
-	console.log(ftpConfig)
-
 	let conn = ftp.create(ftpConfig)
-
 	let globs = ['./public/**']
 
 	return gulp.src(globs, {base: './public', buffer: false})
